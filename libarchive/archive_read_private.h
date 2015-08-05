@@ -204,7 +204,7 @@ struct archive_read {
 		int	(*read_data_skip)(struct archive_read *);
 		int64_t	(*seek_data)(struct archive_read *, int64_t, int);
 		int	(*cleanup)(struct archive_read *);
-		int	(*format_capabilties)(struct archive_read *);
+		int	(*format_capabilities)(struct archive_read *);
 		int	(*has_encrypted_entries)(struct archive_read *);
 	}	formats[16];
 	struct archive_format_descriptor	*format; /* Active format. */

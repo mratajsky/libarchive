@@ -800,8 +800,8 @@ int
 archive_read_format_capabilities(struct archive *_a)
 {
 	struct archive_read *a = (struct archive_read *)_a;
-	if (a && a->format && a->format->format_capabilties) {
-		return (a->format->format_capabilties)(a);
+	if (a && a->format && a->format->format_capabilities) {
+		return (a->format->format_capabilities)(a);
 	}
 	return ARCHIVE_READ_FORMAT_CAPS_NONE;
 }
@@ -1206,7 +1206,7 @@ __archive_read_register_format(struct archive_read *a,
 			a->formats[i].cleanup = cleanup;
 			a->formats[i].data = format_data;
 			a->formats[i].name = name;
-			a->formats[i].format_capabilties = format_capabilities;
+			a->formats[i].format_capabilities = format_capabilities;
 			a->formats[i].has_encrypted_entries = has_encrypted_entries;
 			return (ARCHIVE_OK);
 		}
