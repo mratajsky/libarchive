@@ -168,6 +168,7 @@ OPTION(ENABLE_OPENSSL "Enable use of OpenSSL" ON)
 OPTION(ENABLE_LZMA "Enable the use of the system found LZMA library if found" ON)
 OPTION(ENABLE_ZLIB "Enable the use of the system found ZLIB library if found" ON)
 OPTION(ENABLE_BZip2 "Enable the use of the system found BZip2 library if found" ON)
+OPTION(ENABLE_MTREE "Enable the use of the system found libmtree library if found" ON)
 OPTION(ENABLE_LIBXML2 "Enable the use of the system found libxml2 library if found" ON)
 OPTION(ENABLE_EXPAT "Enable the use of the system found EXPAT library if found" ON)
 OPTION(ENABLE_PCREPOSIX "Enable the use of the system found PCREPOSIX library if found" ON)
@@ -967,6 +968,23 @@ ELSE(ENABLE_ICONV)
   UNSET(LIBCHARSET_DLL CACHE)
   UNSET(LIBCHARSET_STATIC CACHE)
 ENDIF(ENABLE_ICONV)
+
+#
+# Find MTree
+#
+IF(ENABLE_MTREE)
+  FIND_PACKAGE(MTree)
+ELSE()
+  SET(MTREE_FOUND FALSE)
+ENDIF()
+IF(MTREE_FOUND)
+  CMAKE_PUSH_CHECK_STATE()	# Save the state of the variables
+  INCLUDE_DIRECTORIES(${MTREE_INCLUDE_DIR})
+  LIST(APPEND ADDITIONAL_LIBS ${MTREE_LIBRARIES})
+  SET(HAVE_LIBMTREE 1)
+  LA_CHECK_INCLUDE_FILE("mtree.h" HAVE_MTREE_H)
+  CMAKE_POP_CHECK_STATE()	# Restore the state of the variables
+ENDIF(MTREE_FOUND)
 
 #
 # Find Libxml2

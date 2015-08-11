@@ -384,13 +384,27 @@ case "$host_os" in
   *darwin* ) with_openssl=no ;;
 esac
 
+AC_ARG_WITH([mtree],
+  AS_HELP_STRING([--without-mtree], [Don't build support for mtree through libmtree]))
 AC_ARG_WITH([xml2],
   AS_HELP_STRING([--without-xml2], [Don't build support for xar through libxml2]))
-AC_ARG_WITH([expat],
-  AS_HELP_STRING([--without-expat], [Don't build support for xar through expat]))
+
+if test "x$with_mtree" != "xno" -o "x$with_xml2" != "xno"; then
+  PKG_PROG_PKG_CONFIG
+fi
+
+if test "x$with_mtree" != "xno"; then
+  PKG_CHECK_MODULES(LIBMTREE_PC, [libmtree], [
+    CPPFLAGS="${CPPFLAGS} ${LIBMTREE_PC_CFLAGS}"
+    LIBS="${LIBS} ${LIBMTREE_PC_LIBS}"
+    AC_CHECK_LIB(mtree,mtree_spec_create,[true],AC_MSG_FAILURE(Missing mtree library))
+  ], [
+    AC_CHECK_LIB(mtree,mtree_spec_create)
+  ])
+  AC_CHECK_HEADERS([mtree.h])
+fi
 
 if test "x$with_xml2" != "xno"; then
-  PKG_PROG_PKG_CONFIG
   PKG_CHECK_MODULES(LIBXML2_PC, [libxml-2.0], [
     CPPFLAGS="${CPPFLAGS} ${LIBXML2_PC_CFLAGS}"
     LIBS="${LIBS} ${LIBXML2_PC_LIBS}"
@@ -400,6 +414,10 @@ if test "x$with_xml2" != "xno"; then
   ])
   AC_CHECK_HEADERS([libxml/xmlreader.h libxml/xmlwriter.h])
 fi
+
+AC_ARG_WITH([expat],
+  AS_HELP_STRING([--without-expat], [Don't build support for xar through expat]))
+
 if test "x$ac_cv_header_libxml_xmlreader_h" != "xyes"; then
   if test "x$with_expat" != "xno"; then
     AC_CHECK_HEADERS([expat.h])
