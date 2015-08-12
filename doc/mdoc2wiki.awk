@@ -98,8 +98,6 @@ function crossref(name, sect, other) {
     n = "ManPageBsdcpio1"
   } else if (name == "cpio" && sect == 5) {
     n = "ManPageCpio5"
-  } else if (name == "mtree" && sect == 5) {
-    n = "ManPageMtree5"
   } else if (name == "tar" && sect == 1) {
     n = "ManPageBsdtar1"
   } else if (name == "tar" && sect == 5) {
