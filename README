@@ -50,7 +50,7 @@ Guide to Documentation installed by this system:
  * archive_internals.3 provides some insight into libarchive's
    internal structure and operation.
  * libarchive-formats.5 documents the file formats supported by the library
- * cpio.5, mtree.5, and tar.5 provide detailed information about these
+ * cpio.5 and tar.5 provide detailed information about these
    popular archive formats, including hard-to-find details about
    modern cpio and tar variants.
 The manual pages above are provided in the 'doc' directory in

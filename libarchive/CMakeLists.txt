@@ -176,7 +176,6 @@ SET(libarchive_MANS
   libarchive.3
   libarchive_internals.3
   libarchive-formats.5
-  mtree.5
   tar.5
 )
 

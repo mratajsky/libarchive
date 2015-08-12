@@ -289,7 +289,6 @@ libarchive_man_MANS= \
 	libarchive/libarchive_changes.3 \
 	libarchive/libarchive_internals.3 \
 	libarchive/libarchive-formats.5 \
-	libarchive/mtree.5 \
 	libarchive/tar.5
 
 # Additional libarchive files to include in the distribution
