@@ -119,8 +119,6 @@ libarchive_la_SOURCES= \
 	libarchive/archive_match.c \
 	libarchive/archive_options.c \
 	libarchive/archive_options_private.h \
-	libarchive/archive_pack_dev.h \
-	libarchive/archive_pack_dev.c \
 	libarchive/archive_pathmatch.c \
 	libarchive/archive_pathmatch.h \
 	libarchive/archive_platform.h \

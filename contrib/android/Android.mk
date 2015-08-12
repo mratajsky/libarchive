@@ -41,7 +41,6 @@ libarchive_src_files := libarchive/archive_acl.c \
 						libarchive/archive_hmac.c \
 						libarchive/archive_match.c \
 						libarchive/archive_options.c \
-						libarchive/archive_pack_dev.c \
 						libarchive/archive_pathmatch.c \
 						libarchive/archive_ppmd7.c \
 						libarchive/archive_random.c \
