@@ -529,13 +529,23 @@ A decimal integer from 0 to 9 specifying the xz compression level.
 The mtree writer module allows you to specify which mtree keywords
 will be included in the output.
 Supported keywords include:
-.Cm cksum , Cm device , Cm flags , Cm gid , Cm gname , Cm indent ,
-.Cm link , Cm md5 , Cm mode , Cm nlink , Cm rmd160 , Cm sha1 , Cm sha256 ,
-.Cm sha384 , Cm sha512 , Cm size , Cm time , Cm uid , Cm uname .
+.Cm cksum , Cm device , Cm flags , Cm gid , Cm gname , Cm inode ,
+.Cm link , Cm md5 , Cm md5digest , Cm mode , Cm nlink , Cm resdevice ,
+.Cm ripemd160digest , Cm rmd160 , Cm rmd160digest , Cm sha1 , Cm sha1digest ,
+.Cm sha256 , Cm sha256digest , Cm sha384 , Cm sha384digest , Cm sha512 ,
+.Cm sha512digest , Cm size , Cm time , Cm type , Cm uid , Cm uname .
 The default is equivalent to:
 .Dq device, flags, gid, gname, link, mode, nlink, size, time, type, uid, uname .
 .It Cm mtree:all
-Enables all of the above keywords.
+Enables all of the above keywords expect for
+.Cm md5digest , Cm ripemd160digest , Cm rmd160digest , Cm sha1digest ,
+.Cm sha256digest , Cm sha384digest
+and
+.Cm sha512digest ,
+which are merely aliases for
+.Cm md5 , Cm rmd160 , Cm sha1 , Cm sha256 , Cm sha384
+and
+.Cm sha512.
 You can also use
 .Cm mtree:!all
 to disable all keywords.
@@ -878,7 +888,7 @@ permissions, or names that differ from existing data on disk:
 $ cat input.mtree
 #mtree
 usr/bin uid=0 gid=0 mode=0755 type=dir
-usr/bin/ls uid=0 gid=0 mode=0755 type=file content=myls
+usr/bin/ls uid=0 gid=0 mode=0755 type=file contents=myls
 $ tar -cvf output.tar @input.mtree
 .Ed
 .Pp
