@@ -103,9 +103,9 @@ read_filter(struct mtree_entry *entry, void *_a)
 		/*
 		 * Unset the filter once we have enough entries.
 		 */
-		mtree_spec_set_read_spec_filter(mtree->spec, NULL, NULL);
+		mtree_spec_set_read_filter(mtree->spec, NULL, NULL);
 	}
-	return (MTREE_FILTER_KEEP);
+	return (MTREE_ENTRY_KEEP);
 }
 
 static int
@@ -135,7 +135,7 @@ mtree_bid(struct archive_read *a, int best_bid)
 	mtree = (struct mtree_read *)a->format->data;
 	mtree->parsed = 0;
 	mtree->bidden = 0;
-	mtree_spec_set_read_spec_filter(mtree->spec, read_filter, a);
+	mtree_spec_set_read_filter(mtree->spec, read_filter, a);
 	for (;;) {
 		avail -= mtree->parsed;
 		if (mtree_spec_read_spec_data(
@@ -516,7 +516,7 @@ mtree_read_header(struct archive_read *a, struct archive_entry *entry)
 			    mtree->spec, p, bytes_read) != 0) {
 				archive_set_error(&a->archive, errno,
 				    "%s",
-				    mtree_spec_get_read_spec_error(mtree->spec));
+				    mtree_spec_get_read_error(mtree->spec));
 				return (ARCHIVE_FATAL);
 			}
 			__archive_read_consume(a, bytes_read);
@@ -524,7 +524,7 @@ mtree_read_header(struct archive_read *a, struct archive_entry *entry)
 		if (mtree_spec_read_spec_data_finish(mtree->spec) != 0) {
 			archive_set_error(&a->archive, errno,
 			    "%s",
-			    mtree_spec_get_read_spec_error(mtree->spec));
+			    mtree_spec_get_read_error(mtree->spec));
 			return (ARCHIVE_FATAL);
 		}
 		mtree->entry = mtree_spec_get_entries(mtree->spec);
@@ -671,8 +671,8 @@ archive_read_support_format_mtree(struct archive *_a)
 		    "Can't allocate mtree spec data");
 		return (ARCHIVE_FATAL);
 	}
-	mtree_spec_set_read_spec_options(mtree->spec,
-	    MTREE_READ_SORT |
+	mtree_spec_set_read_options(mtree->spec,
+	    MTREE_READ_MERGE |
 	    MTREE_READ_MERGE_DIFFERENT_TYPES);
 	mtree->fd = -1;
 

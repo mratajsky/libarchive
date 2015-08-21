@@ -594,17 +594,16 @@ archive_write_mtree_close(struct archive_write *a)
 		 */
 		mtree->entries = mtree_entry_reverse(mtree->entries);
 		mismerged = NULL;
-		merged = mtree_entry_merge(mtree->entries, 0, &mismerged);
+		merged = mtree_entry_merge(mtree->entries, NULL, 0, &mismerged);
 		if (merged != NULL) {
 			mtree_spec_set_entries(mtree->spec,
-			    mtree_entry_sort(merged));
+			    mtree_entry_sort_path(merged));
 			r = mtree_spec_write_writer(mtree->spec, write_data, a);
 			if (r == 0)
 				r = ARCHIVE_OK;
 			else {
 				archive_set_error(&a->archive, errno,
-				    "%s",
-				    mtree_spec_get_write_error(mtree->spec));
+				    "Failed to write the specfile");
 				r = ARCHIVE_FATAL;
 			}
 		} else {
